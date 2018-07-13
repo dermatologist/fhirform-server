@@ -105,16 +105,31 @@ public class InjectorService {
     }
 
     public Questionnaire inject(Questionnaire questionnaire, DataElement dataElement) {
+        // Add *contained* to the Questionnaire
         for (Resource res : dataElement.getContained()) {
-            if (res.getClass() == ValueSet.class || res.getClass() == DataElement.class)
-                questionnaire.addContained(res);
-            if (res.getClass() == Questionnaire.class) {
-                Questionnaire qu = (Questionnaire) res;
-                for (Questionnaire.QuestionnaireItemComponent qi : qu.getItem()) {
-                    questionnaire.addItem(qi);
-                }
-            }
+            questionnaire.addContained(res);
         }
+
+        ElementDefinition elementDefinition = dataElement.getElementFirstRep();
+        Questionnaire.QuestionnaireItemComponent newItem = new Questionnaire.QuestionnaireItemComponent();
+
+        newItem.setLinkId(elementDefinition.getPath());
+        newItem.setCode(elementDefinition.getCode());
+
+
+        if(elementDefinition.getDefinition() == "STRING")
+            newItem.setType(Questionnaire.QuestionnaireItemType.STRING);
+        if(elementDefinition.getDefinition() == "CHOICE")
+            newItem.setType(Questionnaire.QuestionnaireItemType.CHOICE);
+        if(elementDefinition.getDefinition() == "NUMBER")
+            newItem.setType(Questionnaire.QuestionnaireItemType.DECIMAL);
+        if(elementDefinition.getDefinition() == "DATETIME")
+            newItem.setType(Questionnaire.QuestionnaireItemType.DATETIME);
+
+        newItem.setText(elementDefinition.getLabel());
+
+        questionnaire.addItem(newItem);
+
         return questionnaire;
     }
 
