@@ -1,5 +1,6 @@
 package com.canehealth.service;
 
+import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import org.hl7.fhir.dstu3.model.*;
 import org.hl7.fhir.exceptions.FHIRException;
@@ -17,16 +18,11 @@ import java.util.List;
 @Service
 public class InjectorService {
     private final Logger log = LoggerFactory.getLogger(InjectorService.class);
-    private final IGenericClient fhirClient;
     @Value("${spring.application.uri}")
-    protected String uri = "http://canehealth.com/fhirform/";
+    protected String uri;
     @Value("${spring.application.demap}")
-    protected String demap = "http://hl7.org/fhir/StructureDefinition/questionnaire-deMap";
+    protected String demap;
 
-    public InjectorService(IGenericClient fhirClient) {
-        super();
-        this.fhirClient = fhirClient;
-    }
 
     /* function to check if url valid */
     private static boolean urlValidator(String url) {
@@ -62,12 +58,12 @@ public class InjectorService {
         if (itemComponent.getType() == Questionnaire.QuestionnaireItemType.REFERENCE) {
             try {
                 Reference reference = itemComponent.getInitialReference();
-                String extension_value = reference.getReference();
-                if (urlValidator(extension_value)) {
-                    DataElement dataElement = fhirClient.read().resource(DataElement.class).withUrl(extension_value).execute();
-                    log.info("About to inject: {}", extension_value);
-                    questionnaire = inject(questionnaire, dataElement);
-                }
+                String[] referred_dataelement = reference.getReference().split("\\.");
+                FhirContext ctx = FhirContext.forDstu3();
+                IGenericClient fhirClient = ctx.newRestfulGenericClient(uri);
+
+                DataElement dataElement = fhirClient.read().resource(DataElement.class).withIdAndVersion(referred_dataelement[0], referred_dataelement[1]).execute();
+                questionnaire = inject(questionnaire, dataElement);
 
             } catch (FHIRException e) {
                 e.printStackTrace();

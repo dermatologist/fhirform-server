@@ -195,7 +195,7 @@
       "linkId": "referenced-example-1",
       "type": "reference",
       "initialReference": {
-        "reference": "http://oscar.canehealth.com/fhir/fhir/DataElement/1/_history/4?_format=json"
+        "reference": "1.1"
       }
     }
   ]
