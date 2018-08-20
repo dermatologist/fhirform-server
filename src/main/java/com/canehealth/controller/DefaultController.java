@@ -18,5 +18,11 @@ public class DefaultController extends WebMvcConfigurerAdapter {
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/renderer"}, method = RequestMethod.GET)
+    public ModelAndView renderer() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("renderer/index");
+        return modelAndView;
+    }
 
 }
