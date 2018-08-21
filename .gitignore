@@ -127,4 +127,5 @@ local.properties
 .classpath
 /gradlew
 /src/main/resources/js/bundle.js
+/src/main/resources/js/main.js
 /src/main/resources/FHIRForms/

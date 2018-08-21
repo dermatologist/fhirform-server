@@ -5,3 +5,7 @@
 ## Injection
 
 * The id of the injected item may need to be changed.
+
+## Building
+
+* run maven goal *package*
