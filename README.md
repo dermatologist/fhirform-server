@@ -1,15 +1,9 @@
-# A FHIR has been lit on this server
+#fhirform-server | *A FHIR has been lit on this server*
 
-## Branches
 
-* fhir-server : The basic FHIR Restful server using spring-boot and UHN's hapi-fhir library.
-* overlay: FHIR server with the client overlay using spring-boot
-* injector: Injects resources from a file.
-* interceptor: Injects a DataElement demap extension reference into a Questionnaire resource.
-* editor: Adds FRED (Fhir resource editor) to the fhir-server. FRED is a project by 'Smart Health IT' ( https://github.com/smart-on-fhir/fred ). Within this ecosystem, FRED can edit resources on the server. (Work in progress)
-* develop: main development branch
-* ... expect in the future:
-* graphql: A Graphql adapter for 
+## About
+
+This is a spring boot HAPI FHIR server for managing healthcare forms as FHIR Questionnaire resources with individual DataElements. This is a part of the FHIRForm framework with an [editor](https://github.com/E-Health/fred) and a [viewer](https://github.com/dermatologist/fhir-questionnaire-render-react). 
 
 ## Requirements
 
@@ -18,13 +12,15 @@
 
 ## How to Use:
 
+
 ```
-git clone https://github.com/dermatologist/fhirql.git
 mvn spring-boot:run
 ```
 
+*How to manage the whole FHIRForm framework is described elsewhere.*
+
 * Access at http://localhost:8080/fhir
 
-## Author
+## Contributors
 
-Bell Eapen (McMaster U)
+[Bell Eapen](https://nuchange.ca) |  (McMaster U)
