@@ -11,7 +11,7 @@ server:
 spring:
   application:
     name: fhir
-    uri: http://canehealth.com/fhirform/
+    uri: http://oscar.canehealth.com/fhir/fhir
     demap: http://hl7.org/fhir/StructureDefinition/questionnaire-deMap
   thymeleaf:
     prefix: classpath:/WEB-INF/templates/
